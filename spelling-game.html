@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Game</title>
+</head>
+<body>
+    <h1>Spelling Game</h1>
+    <button onclick="startGame()">Start Game</button>
+    <script>
+        function startGame() {
+            let words = ["apple", "banana", "cherry", "grape", "orange", "mango", "strawberry","house", "africa", "liberia", "arsenal", "peach"];
+            let score = 0;
+            let rounds = parseInt(prompt("How many rounds would you like to play?"), 10);
+
+            if (isNaN(rounds) || rounds <= 0) {
+                alert("Invalid number of rounds. Defaulting to 3 rounds.");
+                rounds = 3;
+            }
+
+            for (let i = 0; i < rounds; i++) {
+                let selectedWord = words[Math.floor(Math.random() * words.length)];
+                let letterToGuessIndex = Math.floor(Math.random() * selectedWord.length);
+                let letterToGuess = selectedWord[letterToGuessIndex];
+
+                let maskedWord = selectedWord.split("");
+                maskedWord[letterToGuessIndex] = "_";
+                maskedWord = maskedWord.join("");
+
+                let playerGuess = prompt(`Round ${i + 1}: Guess the missing letter in the word: ${maskedWord}`);
+
+                if (!playerGuess || playerGuess.length !== 1) {
+                    alert("❌ Invalid input! You must enter a single letter.");
+                } else if (playerGuess.toLowerCase() === letterToGuess) {
+                    alert(`✅ Correct! The missing letter was: ${letterToGuess}`);
+                    score++;
+                } else {
+                    alert(`❌ Oops! The missing letter was: ${letterToGuess}`);
+                }
+            }
+
+            alert(`🎉 Game Over! Your final score is: ${score}/${rounds}`);
+        }
+    </script>
+</body>
+</html>
